@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>
+			PicMeNow
+		</title>
+		<style>
+			#maincanvas {
+				border: 2px dotted black;
+				padding: 50px;
+				margin-top: 0;
+				margin-bottom: 0;
+				margin-left: auto;
+				margin-right: auto;
+				display:block;
+			}
+			h1 {
+				text-align: center;
+				font-family: monospace;
+				font-size: 40px;
+				margin: 3;
+			}
+			button:hover{
+				background-color: red;
+			}
+		</style>
+		<script>
+			window.onload = drawpath;
+			var coordx = new Array();
+			var coordy = new Array();
+			var dragging = new Array();
+			function storeCoord(x,y,coordx, coordy) {
+				coordx.push(x);
+				coordy.push(y);
+			}
+
+			function randomize() {
+				var i = 0;
+				while (i < 500) {
+					storeCoord(800*Math.random(), 400*Math.random(), coordx, coordy);
+					dragging.push(Math.random() > .5);
+					i ++;
+				}
+			}
+			randomize();
+			var draw;
+			function stopdraw() {
+				clearInterval(draw);
+			}
+			function drawpath() {
+				var canvas = document.getElementById("maincanvas");
+				canvas.width = canvas.width;
+				stopdraw();
+				var context = canvas.getContext("2d");
+				context.beginPath();
+				context.moveTo(0,0);
+				var i = 0;
+				alert("starting");
+				draw = setInterval(function() {
+					if (dragging[i]){
+						context.lineTo(coordx[i], coordy[i]);
+						context.stroke();
+					} else {
+						context.moveTo(coordx[i], coordy[i]);
+					}
+					i++;
+				}, 60);
+			}
+		</script>
+	</head>
+	<body>
+		<h1> PicMeNow </h1>
+		<canvas id="maincanvas" width="800px" height ="400px"> Canvas not supported by your current browser</canvas>
+		<button onclick="stopdraw()"> Stop drawing </button>
+		<br>
+		<button onclick="drawpath()"> Restart</button>
+	</body>
+</html>
+

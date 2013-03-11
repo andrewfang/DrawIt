@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>
+			Main Page
+		</title>
+		<script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				document.getElementById("mainCanvas").onclick = showCanvas;	
+				var myCanvas;
+				function createCanvasOverlay(canvasContainer)
+				 {
+				    if (!myCanvas)
+				    {
+				      if (!canvasContainer)
+				      {
+				        canvasContainer = document.createElement('div'); 
+				        document.body.appendChild(canvasContainer);
+				        canvasContainer.style.position="absolute";
+				        canvasContainer.style.left="0px";
+				        canvasContainer.style.top="0px";
+				        canvasContainer.style.width="100%";
+				        canvasContainer.style.height="100%";
+				        canvasContainer.style.zIndex="1000";
+				        superContainer=document.body;
+				      }
+				      else
+				        superContainer=canvasContainer;
+				      
+				      // Part of block below is inspired by code from Google excanvas.js
+				      {
+				      myCanvas = document.createElement('canvas');    
+				      myCanvas.style.width = superContainer.scrollWidth+"px";
+				      myCanvas.style.height = superContainer.scrollHeight+"px";
+				      // You must set this otherwise the canvas will be streethed to fit the container
+				      myCanvas.width=superContainer.scrollWidth;
+				      myCanvas.height=superContainer.scrollHeight;
+				      // surfaceElement.style.width=window.innerWidth;
+				      myCanvas.style.overflow = 'visible';
+				      myCanvas.style.position = 'absolute';	
+				      myCanvas.style.marginLeft = "70px";	
+				      }
+				      
+				      var context=myCanvas.getContext('2d');
+				      context.fillStyle = "rgba(1, 0, 0, .7)";
+				      context.fillRect(0,0, myCanvas.width, myCanvas.height);
+				      canvasContainer.appendChild(myCanvas);
+				  
+				      var closeButton=document.createElement('div');
+				      closeButton.style.position="relative";      
+				      closeButton.style.float="left";
+				      closeButton.onclick = hideCanvas;
+				      closeButton.style.width="70px";
+				      closeButton.style.height="100%";
+				      closeButton.style.background="#000";
+				      closeButton.style.opacity="0.2";
+				      closeButton.style.border="100px";
+				      closeButtonText=document.createTextNode("	");
+				      closeButton.appendChild(closeButtonText);
+				      canvasContainer.appendChild(closeButton);
+
+				      //alert(myCanvas);
+				    }
+				 }
+
+				 function hideCanvas() {
+				    if (myCanvas) {
+				      //myCanvas.style.visibility='hidden';
+				      myCanvas.parentNode.style.visibility='hidden';
+				    }
+				 }
+				 function showCanvas() {
+				    if (myCanvas) {
+				      //myCanvas.style.visibility='hidden';
+				      myCanvas.parentNode.style.visibility='visible';
+				    }
+				 }
+				 createCanvasOverlay();
+				 hideCanvas();
+			});
+		</script>
+
+
+
+
+
+		<style>
+			h1 {
+				text-align: center;
+				font-family: monospace;
+				font-size: 40px;
+			}
+			#mainCanvas {
+				border: 2px dotted cyan;
+				margin-top: 0;
+				margin-bottom: 10;
+				margin-left: auto;
+				margin-right: auto;
+				display:block;
+			}
+
+			#subCanvas1 {
+				position:absolute;
+				top: 20%;
+				left: 10%;
+			}
+
+			#subCanvas2 {
+				position:absolute;
+				
+			}
+
+			#subCanvas3 {
+				position:absolute;
+				top: 20%;
+				right: 10%;
+			}
+
+			.subcanvas {
+				border: 2px dashed magenta;
+			}
+			#outerdiv {
+				margin-right: auto;
+				margin-left: auto;
+				width: 100%;
+				padding-left: 10px;
+				padding-right: 10px;
+				margin-top: 30px;
+				border: 2px dotted black;
+				position: relative;
+			}
+
+			#innerdiv {
+				position: absolute;
+				top: 20%;
+				left: 40%;
+			}
+			
+		</style>
+
+
+
+
+
+		
+	</head>
+	<body>
+		<h1> DrawIt! </h1>
+		<canvas id="mainCanvas" width="600px" height="300px">
+			Canvas cannot be displayed </canvas>
+		
+		<div id="outerdiv">
+		<canvas class="subcanvas" id="subCanvas1" width="200px" height="100px">
+			Canvas cannot be displayed </canvas>
+		<div id = "innerdiv">
+		<canvas class="subcanvas" id="subCanvas2" width="200px" height="100px">
+			Canvas cannot be displayed </canvas>
+		</div>
+		<canvas class="subcanvas" id="subCanvas3" width="200px" height="100px">
+			Canvas cannot be displayed </canvas>
+		</div>
+	</body>
+</html>
+
